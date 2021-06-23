@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { createStore } from "redux";
 import propertiesReducer from "./reducers/viewerReducer";
 
 // export const store = createStore(reducers);

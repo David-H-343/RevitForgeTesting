@@ -16,8 +16,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
 
-import React, { Component, useEffect } from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+// import { connect } from "react-redux";
 import "./properties.css";
 import { properties as objectProps } from "../Viewer/Viewer-helpers";
 
