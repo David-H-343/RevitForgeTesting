@@ -30,10 +30,10 @@ var credentials = {
         callbackUrl:
             "https://www.google.com/" || "<replace with your callbackUrl>",
     },
-
     // If you which to use the Autodesk View & Data API on the staging server, change this url
     BaseUrl: "https://developer.api.autodesk.com",
     Version: "v1",
+    Authentication: null,
 };
 
 credentials.Authentication =
