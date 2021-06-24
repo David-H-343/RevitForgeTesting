@@ -22,15 +22,15 @@ import { debounce, uniq } from "lodash";
 import Client from "../Client";
 
 import { Dispatch } from "react";
-import { getSelectedProperties } from "../../store/selectedPropertiesActions";
+import { getSelectedProperties } from "../store/selectedPropertiesActions";
 import {
     IDimensions,
     IMaterial,
     IForgeModelProperties,
     IForgeModelPropertiesData,
     ISelectedProperties,
-} from "../../type";
-import store from "../../store/store";
+} from "../type";
+import store from "../store/store";
 
 export var viewer: any;
 const getToken = { accessToken: Client.getaccesstoken() };

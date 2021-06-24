@@ -21,7 +21,7 @@ import "./ForgeViewer.css";
 import Viewer from "../Viewer/Viewer";
 import classnames from "classnames";
 import scrollTo from "scroll-to";
-import Properties from "../Properties";
+import Properties from "../Properties/Properties";
 import {
     viewerResize,
     viewerExplode,

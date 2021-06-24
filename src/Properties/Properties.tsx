@@ -19,7 +19,7 @@
 import React from "react";
 import "./properties.css";
 import { useSelector } from "react-redux";
-import { ISelectedProperties, SelectedPropertiesState } from "../../type";
+import { ISelectedProperties, SelectedPropertiesState } from "../type";
 
 interface IPropertiesProps {
     onClose: () => void;
