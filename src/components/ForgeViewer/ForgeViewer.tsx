@@ -30,6 +30,7 @@ import {
     stopMotion,
     modelRestoreState,
 } from "../Viewer/Viewer-helpers";
+import { useSelector } from "react-redux";
 
 interface IForgeViewerProps {}
 
@@ -263,10 +264,7 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
                 </button>
 
                 {isPropertiesVisible ? (
-                    <Properties
-                        properties={[]}
-                        onClose={handlePropertiesClose}
-                    />
+                    <Properties onClose={handlePropertiesClose} />
                 ) : null}
 
                 <input

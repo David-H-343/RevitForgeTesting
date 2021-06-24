@@ -18,15 +18,23 @@
 
 /* global Autodesk, THREE */
 import { debounce, uniq } from "lodash";
-import { actions } from "../../actions";
-import { store } from "../../store";
 
 import Client from "../Client";
 
-export interface IModelProperties {
-    category: string;
-    data: any;
-}
+import { actions } from "../../actions";
+
+import { Dispatch } from "react";
+import { useAppDispatch } from "../../hooks";
+import { getViewerProperties } from "../../actions/viewerActions";
+import {
+    IDimensions,
+    IMaterial,
+    IModelProperties,
+    IModelPropertiesData,
+    ISelectedProperties,
+} from "../../type";
+import { useDispatch } from "react-redux";
+import store from "../../store";
 
 var viewer: any;
 var getToken = { accessToken: Client.getaccesstoken() };
@@ -86,20 +94,47 @@ function loadDocument(documentId: string) {
                 viewer.addEventListener(
                     Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT,
                     debounce(() => {
+                        // const dispatch: Dispatch<any> = useDispatch();
+                        const dispatch: Dispatch<any> = store.dispatch;
                         console.log("selection change");
                         getModelProperties()
                             .then((modelProperties) => {
-                                store.dispatch(
-                                    actions.getViewerProperties(modelProperties)
-                                );
-                                console.log(getDimensions(modelProperties));
+                                const properties: ISelectedProperties =
+                                    getPropertiesFromModel(modelProperties);
+                                dispatch(getViewerProperties(properties));
+                                // console.log(properties);
+                                // dispatch(
+                                //     actions.viewerPropertiesAction(
+                                //         modelProperties
+                                //     )
+                                // );
+                                // store.dispatch(
+                                //     actions.viewerPropertiesAction(
+                                //         modelProperties
+                                //     )
+                                // );
+                                // console.log(getDimensions(modelProperties));
                             })
-                            .catch(() =>
-                                store.dispatch(actions.getViewerProperties([]))
+                            .catch(
+                                () =>
+                                    dispatch(
+                                        getViewerProperties({
+                                            material: {
+                                                name: "null",
+                                                cost: -1,
+                                            },
+                                        })
+                                    )
+                                // dispatch(actions.viewerPropertiesAction([]))
+                                // store.dispatch(
+                                //     actions.viewerPropertiesAction([])
+                                // )
                             );
                     }),
                     200
                 );
+
+                // store.dispatch()
 
                 viewer.load(doc.getViewablePath(geometryItems[0])); // show 1st view on this document...
             }
@@ -111,30 +146,65 @@ function loadDocument(documentId: string) {
     );
 }
 
-const getDimensions = (objectProperties: IModelProperties[]) => {
-    let dimensions: any[] = [];
-    for (let i = 0; i < objectProperties.length; i++) {
-        if (objectProperties[i].category === "Dimensions") {
-            for (let j = 0; j < objectProperties[i].data.length; j++) {
-                // console.log(objectProperties[i].data[j]);
-                dimensions.push(getDimension(objectProperties[i].data[j]));
-            }
+const getPropertiesFromModel = (
+    modelProperties: IModelProperties[]
+): ISelectedProperties => {
+    let dimensionsOfObject: IDimensions = {};
+    let materialOfObject: IMaterial = { name: "null", cost: -1 };
+    let propertiesOfObject: ISelectedProperties = {
+        material: materialOfObject,
+    };
+    for (let i = 0; i < modelProperties.length; i++) {
+        if (modelProperties[i].category === "Dimensions") {
+            dimensionsOfObject = getDimensions(modelProperties[i].data);
+        }
+        propertiesOfObject = {
+            dimensions: dimensionsOfObject,
+            material: materialOfObject,
+        };
+    }
+    return propertiesOfObject;
+};
+
+const getDimensions = (
+    objectDimensions: IModelPropertiesData[]
+): IDimensions => {
+    let dimensions: IDimensions = {};
+    for (let i = 0; i < objectDimensions.length; i++) {
+        const val = objectDimensions[i].displayValue;
+        if (objectDimensions[i].attributeName == "Length") {
+            dimensions.length = val;
+        } else if (objectDimensions[i].attributeName == "Area") {
+            dimensions.area = val;
         }
     }
     return dimensions;
 };
 
-const getDimension = (objectDimensions: {
-    attributeName: string;
-    displayValue: any;
-    units: string;
-}) => {
-    return {
-        displayName: objectDimensions.attributeName,
-        displayValue: objectDimensions.displayValue,
-        units: objectDimensions.units,
-    };
-};
+// const getDimensions = (objectProperties: IModelProperties[]) => {
+//     let dimensions: any[] = [];
+//     for (let i = 0; i < objectProperties.length; i++) {
+//         if (objectProperties[i].category === "Dimensions") {
+//             for (let j = 0; j < objectProperties[i].data.length; j++) {
+//                 // console.log(objectProperties[i].data[j]);
+//                 dimensions.push(getDimension(objectProperties[i].data[j]));
+//             }
+//         }
+//     }
+//     return dimensions;
+// };
+
+// const getDimension = (objectDimensions: {
+//     attributeName: string;
+//     displayValue: any;
+//     units: string;
+// }) => {
+//     return {
+//         displayName: objectDimensions.attributeName,
+//         displayValue: objectDimensions.displayValue,
+//         units: objectDimensions.units,
+//     };
+// };
 
 //////////////////////////////////////////////////////////////////////////
 // Model Geometry loaded callback

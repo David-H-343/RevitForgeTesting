@@ -19,15 +19,27 @@
 import React, { useEffect } from "react";
 // import { connect } from "react-redux";
 import "./properties.css";
-import { properties as objectProps } from "../Viewer/Viewer-helpers";
+// import { properties as objectProps } from "../Viewer/Viewer-helpers";
+// import { RootState } from "../../store";
+import { GET_AGGREGATE_PROPERTIES } from "../../actions/viewerTypes";
+// import { connect, ConnectedProps, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
+import { ISelectedProperties, SelectedPropertiesState } from "../../type";
 
 interface IPropertiesProps {
-    properties: any[];
     onClose: () => void;
 }
 
-const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
-    const { properties, onClose } = props;
+const Properties: React.FunctionComponent<IPropertiesProps> = (
+    props
+    // reduxProps: PropsFromRedux
+) => {
+    const { onClose } = props;
+    const selectedProperties: ISelectedProperties = useSelector(
+        (state: SelectedPropertiesState) => state.properties
+    );
+
+    // const { properties, getProperties } = reduxProps;
 
     // State
     const [collapsed, setCollapsed] = React.useState<Map<number, boolean>>(
@@ -45,11 +57,15 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
         setCollapsed(collapsed.set(propertyIndex, !isCollapsed));
     };
 
+    // const properties = useSelector((state: RootState) => state.properties);
+    // const properties: any = [];
+
     useEffect(() => {
-        if (properties.length === 1) {
-            setCollapsed(collapsed.set(0, true));
-            // this.setPropertyByIndex(0, true);
-        }
+        // properties = getProperties();
+        // if (propertiesList.length === 1) {
+        //     setCollapsed(collapsed.set(0, true));
+        //     // this.setPropertyByIndex(0, true);
+        // }
     }, []);
 
     // const setPropertyByIndex = (index: number, isCollapsed: boolean) => {
@@ -74,9 +90,11 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
     //     }
     // };
 
+    // const properties = useSelector((state: RootState) => state.properties);
+
     // const objectprops = getModelProperties();
     console.log("PROPS");
-    console.log(objectProps);
+    console.log(selectedProperties);
 
     return (
         <div className="model-properties">
@@ -86,14 +104,32 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
                 </button>
                 <h3>Properties</h3>
 
-                {!properties.length ? (
+                {!selectedProperties ? (
                     <p>
                         <em>Select a part to get started</em>
                     </p>
                 ) : null}
                 <div>
                     <div>
-                        {properties.map(
+                        {selectedProperties.dimensions?.length && (
+                            <p>
+                                Length:{" "}
+                                {Math.round(
+                                    selectedProperties.dimensions.length
+                                )}
+                            </p>
+                        )}
+                        {selectedProperties.dimensions?.area && (
+                            <p>
+                                Area:{" "}
+                                {selectedProperties.dimensions.area.toFixed(3)}
+                            </p>
+                        )}
+                        <p>Material: {selectedProperties.material.name}</p>
+                        <p>
+                            Cost: {Math.round(selectedProperties.material.cost)}
+                        </p>
+                        {/* {properties.map(
                             (
                                 property: {
                                     category:
@@ -174,7 +210,7 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
                                     ) : null}
                                 </ul>
                             )
-                        )}
+                        )} */}
                     </div>
                 </div>
             </div>
@@ -189,8 +225,20 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
 //     }
 //   }
 
+// const mapState = (state: RootState) => ({
+//     properties: state.properties,
+// });
+
+// const mapDispatch = {
+//     getProperties: () => ({ type: GET_AGGREGATE_PROPERTIES }),
+// };
+
+// const connector = connect(mapState, mapDispatch);
+
 // const PropertiesComponent = connect((state) => ({
 //     properties: state.properties,
 // }))(Properties);
+
+// type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default Properties;

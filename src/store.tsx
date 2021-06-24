@@ -1,47 +1,34 @@
-import { configureStore } from "@reduxjs/toolkit";
-import propertiesReducer from "./reducers/viewerReducer";
+// import { configureStore } from "@reduxjs/toolkit";
+// import propertiesReducer, { IObjectProperties } from "./actions/viewerReducer";
 
-// export const store = createStore(reducers);
+// // export const store = createStore(reducers);
 
-const reducer = {
-    properties: propertiesReducer,
-};
+// const reducer = {
+//     properties: propertiesReducer,
+// };
 
-const preloadedState = {
-    properties: [
-        {
-            dimensions: {
-                width: 10,
-                length: 10,
-                area: 100,
-                unit: "ft",
-            },
-            material: {
-                name: "Carpet",
-                cost: "5",
-            },
-        },
-        {
-            dimensions: {
-                width: 5,
-                length: 5,
-                area: 25,
-                unit: "ft",
-            },
-            material: {
-                name: "Hardwood",
-                cost: "8",
-            },
-        },
-    ],
-};
+// export const store = configureStore({
+//     reducer,
+//     // preloadedState,
+// });
 
-export const store = configureStore({
-    reducer,
-    preloadedState,
-});
+// export default store;
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+// import { createStore, Store } from "@reduxjs/toolkit";
+import { createStore, applyMiddleware, Store } from "@reduxjs/toolkit";
+import thunk from "redux-thunk";
+import { DispatchType, SelectedPropertiesAction, SelectedPropertiesState } from "./type";
+import reducer from "./actions/viewerReducer";
+
+// const store: Store<PropertyState, PropertyAction> & {
+//     dispatch: DispatchType;
+// } = createStore(reducer, applyMiddleware(thunk));
+
+const store: Store<SelectedPropertiesState, SelectedPropertiesAction> & {
+    dispatch: DispatchType;
+} = createStore(reducer, applyMiddleware(thunk));
+
+// export type RootState = ReturnType<typeof store.getState>;
+// export type AppDispatch = typeof store.dispatch;
 
 export default store;
