@@ -25,7 +25,6 @@ import Properties from "../Properties";
 import {
     viewerResize,
     viewerExplode,
-    toggleExplosion,
     toggleRotation,
     stopMotion,
     modelRestoreState,
@@ -38,7 +37,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
     // State
     const [fullscreen, setFullscreen] = React.useState<boolean>(false);
     const [isExploding, setIsExploding] = React.useState<boolean>(false);
-    const [expMotion, setExpMotion] = React.useState<boolean>(false);
     const [rotMotion, setRotMotion] = React.useState<boolean>(false);
     const [resetState, setResetState] = React.useState<boolean>(false);
     const [isPropertiesVisible, setIsPropertiesVisible] =
@@ -82,7 +80,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
 
             setFullscreen(false);
             setIsExploding(false);
-            setExpMotion(false);
             setRotMotion(false);
             setResetState(false);
             setIsPropertiesVisible(false);
@@ -117,20 +114,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
         }
     }, [isExploding]);
 
-    const onExplodeAnimation = () => {
-        setExpMotion(!expMotion);
-    };
-
-    useEffect(() => {
-        if (expMotion) {
-            document.body.classList.add("explode-motion");
-            toggleExplosion(false);
-        } else {
-            document.body.classList.remove("explode-motion");
-            toggleExplosion(true);
-        }
-    }, [expMotion]);
-
     const onRotateAnimation = () => {
         setRotMotion(!rotMotion);
     };
@@ -152,7 +135,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
             "rotate-motion"
         );
         setIsExploding(false);
-        setExpMotion(false);
         setRotMotion(false);
         stopMotion();
         modelRestoreState();
@@ -211,12 +193,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
         "btn--deactive": !isExploding,
     });
 
-    const explodeMotionBtnClass = classnames({
-        "explode-motion-btn": true,
-        "expbtn--active": expMotion,
-        "expbtn--deactive": !expMotion,
-    });
-
     const rotateMotionBtnClass = classnames({
         "rotate-motion-btn": true,
         "rotbtn--active": rotMotion,
@@ -246,12 +222,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
                 </button>
                 <button className={explodeBtnClass} onClick={onExplode}>
                     <i className={explodeClass}></i>
-                </button>
-                <button
-                    className={explodeMotionBtnClass}
-                    onClick={onExplodeAnimation}
-                >
-                    <i className={explodeMotionClass}></i>
                 </button>
                 <button
                     className={rotateMotionBtnClass}

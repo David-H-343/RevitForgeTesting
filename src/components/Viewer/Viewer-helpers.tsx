@@ -33,9 +33,8 @@ import {
 import store from "../../store";
 
 var viewer: any;
-var getToken = { accessToken: Client.getaccesstoken() };
-var explodeScale = 0;
-var startExplosion: any = null;
+const getToken = { accessToken: Client.getaccesstoken() };
+let explodeScale = 0;
 var explosionReq: any;
 var isExploding = false;
 var outwardExplosion = true;
@@ -90,7 +89,6 @@ function loadDocument(documentId: string) {
                 viewer.addEventListener(
                     Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT,
                     debounce(() => {
-                        // const dispatch: Dispatch<any> = useDispatch();
                         const dispatch: Dispatch<any> = store.dispatch;
                         getModelProperties()
                             .then((modelProperties) => {
@@ -242,56 +240,6 @@ export function modelRestoreState() {
 }
 
 /**
- * toggle explosion motion
- * @param  boolean cancelMotion - true if cancel motion is requested
- */
-export function toggleExplosion(cancelMotion: boolean) {
-    if (viewer) {
-        if (cancelMotion || isExploding) {
-            cancelAnimationFrame(explosionReq);
-            isExploding = false;
-            if (cancelMotion) {
-                explodeScale = 0;
-                viewer.explode(explodeScale);
-            }
-        } else {
-            explodeMotion(0);
-            isExploding = true;
-        }
-    }
-}
-
-/**
- * Recursive function for calling requestAnimationFrame for explode motion
- */
-
-export function explodeMotion(timestamp: number) {
-    if (viewer) {
-        if (!startExplosion) {
-            startExplosion = timestamp;
-        }
-        var progress = timestamp - startExplosion;
-        startExplosion = timestamp;
-        var explodeStep = 0.0002 * (progress || 0);
-        // explode outward and inward
-        if (outwardExplosion) {
-            explodeScale += explodeStep;
-        } else {
-            explodeScale -= explodeStep;
-        }
-        if (explodeScale > 1) {
-            outwardExplosion = false;
-            explodeScale = 1; // this solves when user go to another browser tab
-        } else if (explodeScale < 0) {
-            outwardExplosion = true;
-            explodeScale = 0; // this solves when user go to another browser tab
-        }
-        viewer.explode(explodeScale);
-        explosionReq = window.requestAnimationFrame(explodeMotion);
-    }
-}
-
-/**
  * recursive function for rotation motion each time page refreshes
  */
 export function rotateMotion(timestamp: number) {
@@ -303,16 +251,16 @@ export function rotateMotion(timestamp: number) {
         startRotation = timestamp;
         var rotateStep = 0.0005 * (progress || 0);
         // get the up axis
-        var worldUp = viewer.navigation.getWorldUpVector();
+        // var worldUp = viewer.navigation.getWorldUpVector();
         // get the current position
         var pos = viewer.navigation.getPosition();
         // copy that position
         var position = new THREE.Vector3(pos.x, pos.y, pos.z);
         // set the rotate axis
-        var rAxis = new THREE.Vector3(worldUp.x, worldUp.y, worldUp.z);
-        var matrix = new THREE.Matrix4().makeRotationAxis(rAxis, rotateStep);
+        // var rAxis = new THREE.Vector3(worldUp.x, worldUp.y, worldUp.z);
+        // var matrix = new THREE.Matrix4().makeRotationAxis(rAxis, rotateStep);
         //apply the new position
-        position.applyMatrix4(matrix);
+        // position.applyMatrix4(matrix);
         viewer.navigation.setPosition(position);
         rotationReq = window.requestAnimationFrame(rotateMotion);
     }
@@ -333,7 +281,6 @@ export function toggleRotation(cancelMotion: boolean) {
 }
 
 export function stopMotion() {
-    toggleExplosion(true);
     toggleRotation(true);
 }
 
