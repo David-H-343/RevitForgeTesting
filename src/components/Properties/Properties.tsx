@@ -30,12 +30,9 @@ interface IPropertiesProps {
     onClose: () => void;
 }
 
-const Properties: React.FunctionComponent<IPropertiesProps> = (
-    props
-    // reduxProps: PropsFromRedux
-) => {
+const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
     const { onClose } = props;
-    const selectedProperties: ISelectedProperties = useSelector(
+    const selectedProperties: ISelectedProperties | undefined = useSelector(
         (state: SelectedPropertiesState) => state.properties
     );
 
@@ -108,137 +105,77 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (
                     <p>
                         <em>Select a part to get started</em>
                     </p>
-                ) : null}
-                <div>
+                ) : (
                     <div>
-                        {selectedProperties.dimensions?.length && (
-                            <p>
-                                Length:{" "}
-                                {Math.round(
-                                    selectedProperties.dimensions.length
-                                )}
-                            </p>
-                        )}
-                        {selectedProperties.dimensions?.area && (
-                            <p>
-                                Area:{" "}
-                                {selectedProperties.dimensions.area.toFixed(3)}
-                            </p>
-                        )}
-                        <p>Material: {selectedProperties.material.name}</p>
-                        <p>
-                            Cost: {Math.round(selectedProperties.material.cost)}
-                        </p>
-                        {/* {properties.map(
-                            (
-                                property: {
-                                    category:
-                                        | boolean
-                                        | React.ReactChild
-                                        | React.ReactFragment
-                                        | React.ReactPortal
-                                        | null
-                                        | undefined;
-                                    data: any[];
-                                },
-                                i: number
-                            ) => (
-                                <ul key={i}>
-                                    <div>
-                                        <h4>
-                                            <a
-                                                data-toggle="collapse"
-                                                onClick={toggleProperty}
-                                            >
-                                                {property.category}
-                                            </a>
-                                        </h4>
-                                    </div>
-                                    {collapsed.get(i) ? (
-                                        <div>
-                                            <ul>
-                                                {property.data.map(
-                                                    (
-                                                        item: {
-                                                            displayName:
-                                                                | string
-                                                                | number
-                                                                | boolean
-                                                                | {}
-                                                                | React.ReactElement<
-                                                                      any,
-                                                                      | string
-                                                                      | React.JSXElementConstructor<any>
-                                                                  >
-                                                                | React.ReactNodeArray
-                                                                | React.ReactPortal
-                                                                | null
-                                                                | undefined;
-                                                            displayValue:
-                                                                | string
-                                                                | number
-                                                                | boolean
-                                                                | {}
-                                                                | React.ReactElement<
-                                                                      any,
-                                                                      | string
-                                                                      | React.JSXElementConstructor<any>
-                                                                  >
-                                                                | React.ReactNodeArray
-                                                                | React.ReactPortal
-                                                                | null
-                                                                | undefined;
-                                                        },
-                                                        itemIndex:
-                                                            | React.Key
-                                                            | null
-                                                            | undefined
-                                                    ) => (
-                                                        <li key={itemIndex}>
-                                                            <strong>
-                                                                {
-                                                                    item.displayName
-                                                                }
-                                                                :
-                                                            </strong>{" "}
-                                                            {item.displayValue}
-                                                        </li>
-                                                    )
-                                                )}
-                                            </ul>
-                                        </div>
-                                    ) : null}
-                                </ul>
-                            )
-                        )} */}
+                        <div>
+                            {selectedProperties.dimensions?.length && (
+                                <p>
+                                    Length:{" "}
+                                    {Math.round(
+                                        selectedProperties.dimensions.length
+                                    )}
+                                </p>
+                            )}
+                            {selectedProperties.dimensions?.width && (
+                                <p>
+                                    Width:{" "}
+                                    {Math.round(
+                                        selectedProperties.dimensions.width
+                                    )}
+                                </p>
+                            )}
+                            {selectedProperties.dimensions?.height && (
+                                <p>
+                                    Height:{" "}
+                                    {Math.round(
+                                        selectedProperties.dimensions.height
+                                    )}
+                                </p>
+                            )}
+                            {selectedProperties.dimensions?.perimeter && (
+                                <p>
+                                    Perimeter:{" "}
+                                    {Math.round(
+                                        selectedProperties.dimensions.perimeter
+                                    )}
+                                </p>
+                            )}
+                            {selectedProperties.dimensions?.area && (
+                                <p>
+                                    Area:{" "}
+                                    {selectedProperties.dimensions.area.toFixed(
+                                        3
+                                    )}
+                                </p>
+                            )}
+                            {selectedProperties.dimensions?.volume && (
+                                <p>
+                                    Volume:{" "}
+                                    {selectedProperties.dimensions.volume.toFixed(
+                                        3
+                                    )}
+                                </p>
+                            )}
+                            {selectedProperties.material?.name && (
+                                <p>
+                                    Material:{" "}
+                                    {selectedProperties.material?.name}
+                                </p>
+                            )}
+                            {selectedProperties.material?.cost && (
+                                <p>
+                                    Cost:{" "}
+                                    {Math.round(
+                                        selectedProperties.material?.cost || 0
+                                    )}
+                                </p>
+                            )}
+                        </div>
                     </div>
-                </div>
+                )}
             </div>
         </div>
     );
 };
-
-// const mapStateToProps = function(state) {
-//     return {
-//       profile: state.user.profile,
-//       loggedIn: state.auth.loggedIn
-//     }
-//   }
-
-// const mapState = (state: RootState) => ({
-//     properties: state.properties,
-// });
-
-// const mapDispatch = {
-//     getProperties: () => ({ type: GET_AGGREGATE_PROPERTIES }),
-// };
-
-// const connector = connect(mapState, mapDispatch);
-
-// const PropertiesComponent = connect((state) => ({
-//     properties: state.properties,
-// }))(Properties);
-
-// type PropsFromRedux = ConnectedProps<typeof connector>;
 
 export default Properties;

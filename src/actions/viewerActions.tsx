@@ -7,7 +7,7 @@ import * as types from "./viewerTypes";
 // export const viewerPropertiesAction = (properties: IModelProperties[]) =>
 //     action(types.GET_AGGREGATE_PROPERTIES, properties);
 
-export function getViewerProperties(properties: ISelectedProperties) {
+export function getViewerProperties(properties?: ISelectedProperties) {
     const action: SelectedPropertiesAction = {
         type: actionTypes.GET_AGGREGATE_PROPERTIES,
         properties,
