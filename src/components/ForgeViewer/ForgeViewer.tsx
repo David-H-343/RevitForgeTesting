@@ -26,11 +26,11 @@ import {
     viewerResize,
     viewerExplode,
     modelRestoreState,
-} from "../Viewer/Viewer-helpers";
+} from "../Viewer/Viewer-function-helpers";
 
 interface IForgeViewerProps {}
 
-const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
+const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = () => {
     // State
     const [fullscreen, setFullscreen] = React.useState<boolean>(false);
     const [isExploding, setIsExploding] = React.useState<boolean>(false);
@@ -149,9 +149,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
     return (
         <div className="forge-forgeviewer">
             <Viewer />
-            <div className="forge-logo">
-                <img src="images/forge-logo.png" alt="Autodesk Forge" />
-            </div>
             <div className="container safari-only">
                 <button className="forge-btn" onClick={onFullscreen}>
                     <i className={buttonClass}></i>

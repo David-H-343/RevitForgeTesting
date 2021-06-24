@@ -1,272 +1,242 @@
-@media only screen 
-and (min-device-width : 768px) 
-and (max-device-width : 1024px)  { /* STYLES GO HERE */
-  .fullscreen .forge-forgeviewer .container{
-    top: -50px;
- }
+@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    /* STYLES GO HERE */
+    .fullscreen .forge-forgeviewer .container {
+        top: -50px;
+    }
 }
 
 @media screen and (max-width: 768px) {
-  .forge-forgeviewer .container {
-    margin-left: 20px;
-    margin-right: 20px;
-    min-height: 250px;
-  }
+    .forge-forgeviewer .container {
+        margin-left: 20px;
+        margin-right: 20px;
+        min-height: 250px;
+    }
 }
 
 @media (max-width: 768px) {
-  .fullscreen .forge-forgeviewer .container {
-      height: 100vh;
-      width: 90vw;
-  }
+    .fullscreen .forge-forgeviewer .container {
+        height: 100vh;
+        width: 90vw;
+    }
 }
 
 @media (max-width: 768px) {
-  .explode .forge-forgeviewer .range-style {
-      width: 50%;
-  }
+    .explode .forge-forgeviewer .range-style {
+        width: 50%;
+    }
 }
 
 @media (max-width: 768px) {
-  .forge-forgeviewer .forge-logo img {
-    width: 200px !important;
-  }
+    .forge-forgeviewer .forge-logo img {
+        width: 200px !important;
+    }
 }
 
 /*Iphone 5 & 5s*/
-@media (min-device-width : 320px) 
-and (max-device-width : 568px) { /* STYLES GO HERE */
-.forge-forgeviewer .forge-logo img {
-    width: 200px !important;
-  }
-/*
-.forge-forgeviewer .forge-btn, .explode-btn, .explode-motion-btn, .rotate-motion-btn, .reset-btn, .properties-btn{
-  font-size: 1.2em !important;
-  height: 35px !important;
-  width: 35px !important;
+@media (min-device-width: 320px) and (max-device-width: 568px) {
+    /* STYLES GO HERE */
+    .forge-forgeviewer .forge-logo img {
+        width: 200px !important;
+    }
 }
 
-.properties-btn{
-  right: 40px !important;
-}
+@media screen and (max-width: 736px) {
+    /* STYLES GO HERE */
+    .forge-forgeviewer .forge-logo img {
+        width: 200px !important;
+    }
 
-.explode-btn {
-  right: 80px !important;
-}
+    .fullscreen .forge-forgeviewer {
+        height: 100vh;
+    }
 
-.explode-motion-btn {
-  right: 120px !important;
-}
+    .fullscreen .forge-forgeviewer .container {
+        bottom: 5px;
+    }
 
-.rotate-motion-btn {
-  right: 160px !important;
-}
-
-.reset-btn{
-  right: 200px !important;
-}*/
-
-}
-
-/*Iphone 6 plus*/
-/*@media (min-width : 414px) 
-and (max-width : 736px)*/
-
-@media screen and (max-width: 736px) { /* STYLES GO HERE */
-  .forge-forgeviewer .forge-logo img {
-    width: 200px !important;
-  }
-
-  .fullscreen .forge-forgeviewer {
-    height: 100vh;
-  }
-  
-  .fullscreen .forge-forgeviewer .container{
-    bottom: 5px;
- }
-
-/*  Suppose to handle Safari browser
-  ::i-block-chrome, .forge-forgeviewer .container{
-    top: -50px;
-  }*/
-
- .forge-forgeviewer .forge-logo {
-    top: 30px !important;
- }
+    .forge-forgeviewer .forge-logo {
+        top: 30px !important;
+    }
 }
 
 /* CSS for non mobile devices */
 
 .forge-forgeviewer {
-  background: #EDEDED;
-  margin: 0;
-  padding: 20px 10px;
-  position: relative;
+    background: #ededed;
+    margin: 0;
+    padding: 20px 10px;
+    position: relative;
 }
 
 .forge-forgeviewer .container {
-  height: 60vh;
-  min-height: 200px;
-  position: relative;
-  transition: all 300ms ease;
+    height: 60vh;
+    min-height: 200px;
+    position: relative;
+    transition: all 300ms ease;
 }
 
 .fullscreen .forge-forgeviewer .container {
-  height: 100vh;
-  width: 90vw;
+    height: 100vh;
+    width: 90vw;
 }
 
-
 .forge-forgeviewer .forge-logo {
-  position: absolute;
-  top: 20px;
-  left: 30px;
-  z-index: 2;
+    position: absolute;
+    top: 20px;
+    left: 30px;
+    z-index: 2;
 }
 
 .forge-forgeviewer .forge-logo img {
-  width: 300px;
+    width: 300px;
 }
 
-
 .forge-forgeviewer .forge-viewer {
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    position: absolute;
 }
 
 .forge-forgeviewer .forge-btn {
-  background-color: #EE8822;
-  border-radius: 50%;
-  border: none;
-  bottom: -48px;
-  color: white;
-  font-size: 2em;
-  height: 55px;
-  line-height: 1.8;
-  padding: 0;
-  position: absolute;
-  right: 0;
-  text-align: center;
-  transition: all 300ms ease;
-  width: 55px;
-  z-index: 2;
+    background-color: #ee8822;
+    border-radius: 50%;
+    border: none;
+    bottom: -48px;
+    color: white;
+    font-size: 2em;
+    height: 55px;
+    line-height: 1.8;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    transition: all 300ms ease;
+    width: 55px;
+    z-index: 2;
 }
 
 .forge-forgeviewer .forge-btn:focus {
-  outline: none;
+    outline: none;
 }
 
 .forge-forgeviewer .forge-btn:active {
-  background-color: #b4610e;
+    background-color: #b4610e;
 }
 
 .fullscreen .forge-forgeviewer .forge-btn {
-  bottom: 40px;
+    bottom: 40px;
 }
 
-.forge-forgeviewer .explode-btn, .explode-motion-btn, .rotate-motion-btn, .reset-btn, .properties-btn {
-  background-color: rgba(135,135,135, 0.6);
-  border-radius: 50%;
-  border: none;
-  bottom: -48px;
-  color: white;
-  font-size: 2em;
-  height: 55px;
-  line-height: 1.8;
-  padding: 0;
-  position: absolute;
-  text-align: center;
-  width: 55px;
-  z-index: 2;
-  visibility: hidden;
-  outline: none;
+.forge-forgeviewer .explode-btn,
+.explode-motion-btn,
+.rotate-motion-btn,
+.reset-btn,
+.properties-btn {
+    background-color: rgba(135, 135, 135, 0.6);
+    border-radius: 50%;
+    border: none;
+    bottom: -48px;
+    color: white;
+    font-size: 2em;
+    height: 55px;
+    line-height: 1.8;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    width: 55px;
+    z-index: 2;
+    visibility: hidden;
+    outline: none;
 }
 
 .forge-forgeviewer .properties-table {
-  visibility: hidden;
+    visibility: hidden;
 }
 
 .fullscreen .forge-forgeviewer .properties-table {
-  visibility: visible;
+    visibility: visible;
 }
 
-.properties-btn{
-  right: 60px;
+.properties-btn {
+    right: 60px;
 }
 
 .explode-btn {
-  right: 120px;
+    right: 120px;
 }
 
 .explode-motion-btn {
-  right: 180px;
+    right: 180px;
 }
 
 .rotate-motion-btn {
-  right: 240px;
+    right: 240px;
 }
 
-.reset-btn{
-  right: 300px;
+.reset-btn {
+    right: 300px;
 }
 
 .fullscreen .forge-forgeviewer .properties-btn {
-  bottom: 40px;
-  visibility: visible;
+    bottom: 40px;
+    visibility: visible;
 }
 
 .fullscreen .forge-forgeviewer .explode-btn {
-  bottom: 40px;
-  visibility: visible;
+    bottom: 40px;
+    visibility: visible;
 }
 
 .fullscreen .forge-forgeviewer .explode-motion-btn {
-  bottom: 40px;
-  visibility: visible;
+    bottom: 40px;
+    visibility: visible;
 }
 
 .fullscreen .forge-forgeviewer .rotate-motion-btn {
-  bottom: 40px;
-  visibility: visible;
+    bottom: 40px;
+    visibility: visible;
 }
 
 .fullscreen .forge-forgeviewer .reset-btn {
-  bottom: 40px;
-  visibility: visible;
+    bottom: 40px;
+    visibility: visible;
 }
 
-.forge-forgeviewer .btn--active, .expbtn--active, .rotbtn--active {
-  background-color: rgba(53,102,204, 0.9);
+.forge-forgeviewer .btn--active,
+.expbtn--active,
+.rotbtn--active {
+    background-color: rgba(53, 102, 204, 0.9);
 }
 
-.forge-forgeviewer .btn--deactive, .expbtn--deactive, .rotbtn--deactive {
-  background-color: rgba(135,135,135, 0.6);
+.forge-forgeviewer .btn--deactive,
+.expbtn--deactive,
+.rotbtn--deactive {
+    background-color: rgba(135, 135, 135, 0.6);
 }
 
 .forge-forgeviewer .range-style {
-  background-color: rgba(135,135,135, 0.8);
-  bottom: -48px;
-  color: white;
-  font-size: 2em;
-  height: 55px;
-  line-height: 1.8;
-  padding: 0;
-  position: absolute;
-  text-align: center;
-  transition: all 300ms ease;
-  width: 55px;
-  right: 0;
-  z-index: 2;
-  visibility: hidden;
-  transition: visibility 0s linear 300ms, opacity 300ms;
+    background-color: rgba(135, 135, 135, 0.8);
+    bottom: -48px;
+    color: white;
+    font-size: 2em;
+    height: 55px;
+    line-height: 1.8;
+    padding: 0;
+    position: absolute;
+    text-align: center;
+    transition: all 300ms ease;
+    width: 55px;
+    right: 0;
+    z-index: 2;
+    visibility: hidden;
+    transition: visibility 0s linear 300ms, opacity 300ms;
 }
 
 .explode .forge-forgeviewer .range-style {
-  bottom: 100px;
-  width: 24%;
-  visibility: visible;
-  transition: visibility 0s linear 0s, opacity 300ms;
+    bottom: 100px;
+    width: 24%;
+    visibility: visible;
+    transition: visibility 0s linear 0s, opacity 300ms;
 }

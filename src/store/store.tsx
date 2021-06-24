@@ -4,8 +4,8 @@ import {
     DispatchType,
     SelectedPropertiesAction,
     SelectedPropertiesState,
-} from "./type";
-import reducer from "./actions/viewerReducer";
+} from "../type";
+import reducer from "./selectedPropertiesReducer";
 
 const store: Store<SelectedPropertiesState, SelectedPropertiesAction> & {
     dispatch: DispatchType;

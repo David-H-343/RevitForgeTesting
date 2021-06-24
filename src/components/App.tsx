@@ -21,15 +21,42 @@ import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import "font-awesome/css/font-awesome.css";
 import ForgeViewer from "./ForgeViewer/ForgeViewer";
+import Viewer from "./Viewer/Viewer";
 
-class App extends Component {
-    render() {
-        return (
-            <div>
-                <ForgeViewer />
+import { ISelectedProperties, SelectedPropertiesState } from "../type";
+import { useSelector } from "react-redux";
+
+interface IAppProps {}
+
+const App: React.FunctionComponent<IAppProps> = () => {
+    const selectedProperties: ISelectedProperties | undefined = useSelector(
+        (state: SelectedPropertiesState) => state.properties
+    );
+    return (
+        <div>
+            <ForgeViewer />
+            {/* <div>
+                <Viewer />
             </div>
-        );
-    }
-}
+            <div>
+                HELLO
+                {selectedProperties?.dimensions?.area && (
+                    <p>Area: {selectedProperties.dimensions.area.toFixed(3)}</p>
+                )}
+            </div> */}
+        </div>
+    );
+};
+
+// class App extends Component {
+//     render() {
+//         return (
+//             <div>
+//                 {/* <ForgeViewer /> */}
+//                 <Viewer />
+//             </div>
+//         );
+//     }
+// }
 
 export default App;

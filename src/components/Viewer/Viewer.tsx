@@ -16,19 +16,21 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
 
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import ViewerLaunchers from "./Viewer-helpers";
 
-class Viewer extends Component {
-    componentDidMount() {
+interface IViewerProps {}
+
+const Viewer: React.FunctionComponent<IViewerProps> = (props) => {
+    const {} = props;
+
+    useEffect(() => {
         var documentId =
             "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGFrZW9mZi9yYWNfYmFzaWNfc2FtcGxlX3Byb2plY3QucnZ0";
-        ViewerLaunchers.launchViewer("viewerDiv", documentId, "0007");
-    }
+        ViewerLaunchers.launchViewer("viewerDiv", documentId);
+    }, []);
 
-    render() {
-        return <div className="forge-viewer" id="viewerDiv" />;
-    }
-}
+    return <div className="forge-viewer" id="viewerDiv" />;
+};
 
 export default Viewer;

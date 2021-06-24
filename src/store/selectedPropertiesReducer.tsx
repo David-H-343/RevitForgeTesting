@@ -1,5 +1,5 @@
 import { SelectedPropertiesAction, SelectedPropertiesState } from "../type";
-import * as actionTypes from "./viewerTypes";
+import { GET_AGGREGATE_PROPERTIES } from "./selectedPropertiesActions";
 
 const initialState: SelectedPropertiesState = {};
 
@@ -8,7 +8,7 @@ const reducer = (
     action: SelectedPropertiesAction
 ): SelectedPropertiesState => {
     switch (action.type) {
-        case actionTypes.GET_AGGREGATE_PROPERTIES:
+        case GET_AGGREGATE_PROPERTIES:
             const { properties } = action;
             return {
                 ...state,

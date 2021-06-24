@@ -22,23 +22,21 @@ import { debounce, uniq } from "lodash";
 import Client from "../Client";
 
 import { Dispatch } from "react";
-import { getViewerProperties } from "../../actions/viewerActions";
+import { getSelectedProperties } from "../../store/selectedPropertiesActions";
 import {
     IDimensions,
     IMaterial,
-    IModelProperties,
-    IModelPropertiesData,
+    IForgeModelProperties,
+    IForgeModelPropertiesData,
     ISelectedProperties,
 } from "../../type";
-import store from "../../store";
+import store from "../../store/store";
 
-var viewer: any;
+export var viewer: any;
 const getToken = { accessToken: Client.getaccesstoken() };
-var tileId = "";
 export var properties = {};
 
-function launchViewer(div: string, urn: string, id: string) {
-    tileId = id;
+function launchViewer(div: string, urn: string) {
     getToken.accessToken.then((token) => {
         var options = {
             document: urn,
@@ -83,15 +81,17 @@ function loadDocument(documentId: string) {
                     Autodesk.Viewing.AGGREGATE_SELECTION_CHANGED_EVENT,
                     debounce(() => {
                         const dispatch: Dispatch<any> = store.dispatch;
-                        getModelProperties()
-                            .then((modelProperties) => {
+                        getForgeModelProperties()
+                            .then((forgeModelProperties) => {
                                 const properties:
                                     | ISelectedProperties
                                     | undefined =
-                                    getPropertiesFromModel(modelProperties);
-                                dispatch(getViewerProperties(properties));
+                                    getSelectedObjectProperties(
+                                        forgeModelProperties
+                                    );
+                                dispatch(getSelectedProperties(properties));
                             })
-                            .catch(() => dispatch(getViewerProperties()));
+                            .catch(() => dispatch(getSelectedProperties()));
                     }),
                     200
                 );
@@ -106,8 +106,59 @@ function loadDocument(documentId: string) {
     );
 }
 
-const getPropertiesFromModel = (
-    modelProperties: IModelProperties[]
+function getForgeModelProperties() {
+    return new Promise<IForgeModelProperties[]>((resolve, reject) => {
+        const dbId = viewer.getSelection()[0];
+
+        if (viewer.getSelectionCount() !== 1) {
+            return reject("Invalid selection count");
+        }
+
+        return new Promise((resolve) => {
+            viewer.model.getProperties(dbId, (model: { properties: any[] }) => {
+                const properties = model.properties.filter(
+                    (property) => !property.hidden
+                );
+                resolve(properties);
+            });
+        }).then((list: any) => {
+            // Normalize displayCategory property in case it's falsy
+            list = list.map((property: { displayCategory: string }) => ({
+                ...property,
+                displayCategory: property.displayCategory || "Miscellaneous",
+            }));
+
+            // Unique list of categories
+            const categories: string[] = uniq(
+                list.map(
+                    (item: { displayCategory: string }) => item.displayCategory
+                )
+            );
+
+            // Model data to be consumed
+            // Ex: [ {category: 'Miscellaneous', data: []} ]
+            const properties: IForgeModelProperties[] = categories.map(
+                (category) => ({
+                    category,
+                    data: list.filter(
+                        (item: { displayCategory: string }) =>
+                            item.displayCategory === category
+                    ),
+                })
+            );
+
+            resolve(properties);
+        });
+    });
+}
+
+//////////////////////////////////////////////////////////////////////////
+// Object property extraction
+//
+//////////////////////////////////////////////////////////////////////////
+
+const getSelectedObjectProperties = (
+    modelProperties: IForgeModelProperties[]
 ): ISelectedProperties | undefined => {
     let dimensionsOfObject: IDimensions = {};
     let materialOfObject: IMaterial = {};
@@ -128,7 +179,7 @@ const getPropertiesFromModel = (
 };
 
 const getDimensions = (
-    objectDimensions: IModelPropertiesData[]
+    objectDimensions: IForgeModelPropertiesData[]
 ): IDimensions => {
     let dimensions: IDimensions = {};
     for (let i = 0; i < objectDimensions.length; i++) {
@@ -166,70 +217,6 @@ function onGeometryLoaded(event: { target: any }) {
     );
     viewer.fitToView();
     viewer.setQualityLevel(false, false); // Getting rid of Ambientshadows to false to avoid blackscreen problem in Viewer.
-}
-
-function getModelProperties() {
-    return new Promise<IModelProperties[]>((resolve, reject) => {
-        const dbId = viewer.getSelection()[0];
-
-        if (viewer.getSelectionCount() !== 1) {
-            return reject("Invalid selection count");
-        }
-
-        return new Promise((resolve) => {
-            viewer.model.getProperties(dbId, (model: { properties: any[] }) => {
-                const properties = model.properties.filter(
-                    (property) => !property.hidden
-                );
-                resolve(properties);
-            });
-        }).then((list: any) => {
-            // Normalize displayCategory property in case it's falsy
-            list = list.map((property: { displayCategory: string }) => ({
-                ...property,
-                displayCategory: property.displayCategory || "Miscellaneous",
-            }));
-
-            // Unique list of categories
-            const categories: string[] = uniq(
-                list.map(
-                    (item: { displayCategory: string }) => item.displayCategory
-                )
-            );
-
-            // Model data to be consumed
-            // Ex: [ {category: 'Miscellaneous', data: []} ]
-            const properties: IModelProperties[] = categories.map(
-                (category) => ({
-                    category,
-                    data: list.filter(
-                        (item: { displayCategory: string }) =>
-                            item.displayCategory === category
-                    ),
-                })
-            );
-
-            resolve(properties);
-        });
-    });
-}
-
-export function viewerResize() {
-    if (viewer) {
-        viewer.resize();
-    }
-}
-
-export function viewerExplode(num: number) {
-    viewer.explode(num);
-}
-
-export function modelRestoreState() {
-    // TODO: Not finished
-    if (viewer) {
-        var originalState = "";
-        viewer.restoreState(originalState, false, false);
-    }
 }
 
 const ViewerLaunchers = {
