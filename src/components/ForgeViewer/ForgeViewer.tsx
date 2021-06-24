@@ -16,7 +16,7 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
 
-import React, { Component, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./ForgeViewer.css";
 import Viewer from "../Viewer/Viewer";
 import classnames from "classnames";
@@ -25,11 +25,8 @@ import Properties from "../Properties";
 import {
     viewerResize,
     viewerExplode,
-    toggleRotation,
-    stopMotion,
     modelRestoreState,
 } from "../Viewer/Viewer-helpers";
-import { useSelector } from "react-redux";
 
 interface IForgeViewerProps {}
 
@@ -37,23 +34,9 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
     // State
     const [fullscreen, setFullscreen] = React.useState<boolean>(false);
     const [isExploding, setIsExploding] = React.useState<boolean>(false);
-    const [rotMotion, setRotMotion] = React.useState<boolean>(false);
-    const [resetState, setResetState] = React.useState<boolean>(false);
     const [isPropertiesVisible, setIsPropertiesVisible] =
         React.useState<boolean>(false);
     const [value, setValue] = React.useState<number>(0);
-
-    const onOrientationChange = () => {
-        setTimeout(() => viewerResize(), 300);
-    };
-
-    // const componentDidMount = () => {
-    //     window.addEventListener("orientationchange", onOrientationChange);
-    // };
-
-    // const componentWillUnmount = () => {
-    //     window.removeEventListener("orientationchange", onOrientationChange);
-    // };
 
     const handleValueChange = (event: { target: { value: any } }) => {
         setValue(event.target.value);
@@ -80,8 +63,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
 
             setFullscreen(false);
             setIsExploding(false);
-            setRotMotion(false);
-            setResetState(false);
             setIsPropertiesVisible(false);
             setValue(0);
         }
@@ -114,20 +95,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
         }
     }, [isExploding]);
 
-    const onRotateAnimation = () => {
-        setRotMotion(!rotMotion);
-    };
-
-    useEffect(() => {
-        if (rotMotion) {
-            document.body.classList.add("rotate-motion");
-            toggleRotation(false);
-        } else {
-            document.body.classList.remove("rotate-motion");
-            toggleRotation(true);
-        }
-    }, [rotMotion]);
-
     const onResetState = () => {
         document.body.classList.remove(
             "explode",
@@ -135,15 +102,7 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
             "rotate-motion"
         );
         setIsExploding(false);
-        setRotMotion(false);
-        stopMotion();
         modelRestoreState();
-    };
-
-    const onSelectionChange = () => {
-        if (!isPropertiesVisible) {
-            return;
-        }
     };
 
     const handlePropertiesClose = () => {
@@ -166,16 +125,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
         "fa-cubes": fullscreen,
     });
 
-    const explodeMotionClass = classnames({
-        fa: true,
-        "fa-bomb": fullscreen,
-    });
-
-    const rotateMotionClass = classnames({
-        fa: true,
-        "fa-repeat": fullscreen,
-    });
-
     const resetClass = classnames({
         fa: true,
         "fa-refresh": fullscreen,
@@ -193,15 +142,8 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
         "btn--deactive": !isExploding,
     });
 
-    const rotateMotionBtnClass = classnames({
-        "rotate-motion-btn": true,
-        "rotbtn--active": rotMotion,
-        "rotbtn--deactive": !rotMotion,
-    });
-
     const resetBtnClass = classnames({
         "reset-btn": true,
-        "resetbtn--deactive": !rotMotion,
     });
 
     return (
@@ -222,12 +164,6 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = ({}) => {
                 </button>
                 <button className={explodeBtnClass} onClick={onExplode}>
                     <i className={explodeClass}></i>
-                </button>
-                <button
-                    className={rotateMotionBtnClass}
-                    onClick={onRotateAnimation}
-                >
-                    <i className={rotateMotionClass}></i>
                 </button>
                 <button className={resetBtnClass} onClick={onResetState}>
                     <i className={resetClass}></i>

@@ -17,13 +17,13 @@
 /////////////////////////////////////////////////////////////////////////////////
 
 import React, { Component } from "react";
-import Helpers from "./Viewer-helpers";
+import ViewerLaunchers from "./Viewer-helpers";
 
 class Viewer extends Component {
     componentDidMount() {
         var documentId =
             "urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGFrZW9mZi9yYWNfYmFzaWNfc2FtcGxlX3Byb2plY3QucnZ0";
-        Helpers.launchViewer("viewerDiv", documentId, "0007");
+        ViewerLaunchers.launchViewer("viewerDiv", documentId, "0007");
     }
 
     render() {

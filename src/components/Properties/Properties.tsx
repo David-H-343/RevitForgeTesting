@@ -16,13 +16,8 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
 
-import React, { useEffect } from "react";
-// import { connect } from "react-redux";
+import React from "react";
 import "./properties.css";
-// import { properties as objectProps } from "../Viewer/Viewer-helpers";
-// import { RootState } from "../../store";
-import { GET_AGGREGATE_PROPERTIES } from "../../actions/viewerTypes";
-// import { connect, ConnectedProps, useSelector } from "react-redux";
 import { useSelector } from "react-redux";
 import { ISelectedProperties, SelectedPropertiesState } from "../../type";
 
@@ -35,63 +30,6 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
     const selectedProperties: ISelectedProperties | undefined = useSelector(
         (state: SelectedPropertiesState) => state.properties
     );
-
-    // const { properties, getProperties } = reduxProps;
-
-    // State
-    const [collapsed, setCollapsed] = React.useState<Map<number, boolean>>(
-        new Map()
-    );
-
-    const toggleProperty = (
-        // propertyIndex: number,
-        evt: { preventDefault: () => void }
-    ) => {
-        evt.preventDefault();
-        const propertyIndex = 1;
-        const isCollapsed: boolean | undefined = collapsed.get(propertyIndex);
-
-        setCollapsed(collapsed.set(propertyIndex, !isCollapsed));
-    };
-
-    // const properties = useSelector((state: RootState) => state.properties);
-    // const properties: any = [];
-
-    useEffect(() => {
-        // properties = getProperties();
-        // if (propertiesList.length === 1) {
-        //     setCollapsed(collapsed.set(0, true));
-        //     // this.setPropertyByIndex(0, true);
-        // }
-    }, []);
-
-    // const setPropertyByIndex = (index: number, isCollapsed: boolean) => {
-    //     setCollapsed(collapsed.set(index, true));
-    // };
-
-    // const componentDidMount = () => {
-    //     if (properties.length === 1) {
-    //         setCollapsed(collapsed.set(0, true));
-    //         // this.setPropertyByIndex(0, true);
-    //     }
-    // };
-
-    // const componentDidUpdate = (prevProps: IPropertiesProps) => {
-    //     if (prevProps.properties === properties) {
-    //         return;
-    //     }
-
-    //     if (properties.length === 1) {
-    //         setCollapsed(collapsed.set(0, true));
-    //         // this.setPropertyByIndex(0, true);
-    //     }
-    // };
-
-    // const properties = useSelector((state: RootState) => state.properties);
-
-    // const objectprops = getModelProperties();
-    console.log("PROPS");
-    console.log(selectedProperties);
 
     return (
         <div className="model-properties">

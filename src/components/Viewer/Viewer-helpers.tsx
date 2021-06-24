@@ -34,13 +34,6 @@ import store from "../../store";
 
 var viewer: any;
 const getToken = { accessToken: Client.getaccesstoken() };
-let explodeScale = 0;
-var explosionReq: any;
-var isExploding = false;
-var outwardExplosion = true;
-var startRotation: any = null;
-var rotationReq: any;
-var isRotating = false;
 var tileId = "";
 export var properties = {};
 
@@ -140,17 +133,17 @@ const getDimensions = (
     let dimensions: IDimensions = {};
     for (let i = 0; i < objectDimensions.length; i++) {
         const val = objectDimensions[i].displayValue;
-        if (objectDimensions[i].attributeName == "Length") {
+        if (objectDimensions[i].attributeName === "Length") {
             dimensions.length = val;
-        } else if (objectDimensions[i].attributeName == "Width") {
+        } else if (objectDimensions[i].attributeName === "Width") {
             dimensions.width = val;
-        } else if (objectDimensions[i].attributeName == "Height") {
+        } else if (objectDimensions[i].attributeName === "Height") {
             dimensions.height = val;
-        } else if (objectDimensions[i].attributeName == "Perimeter") {
+        } else if (objectDimensions[i].attributeName === "Perimeter") {
             dimensions.perimeter = val;
-        } else if (objectDimensions[i].attributeName == "Area") {
+        } else if (objectDimensions[i].attributeName === "Area") {
             dimensions.area = val;
-        } else if (objectDimensions[i].attributeName == "Volume") {
+        } else if (objectDimensions[i].attributeName === "Volume") {
             dimensions.volume = val;
         }
     }
@@ -239,54 +232,9 @@ export function modelRestoreState() {
     }
 }
 
-/**
- * recursive function for rotation motion each time page refreshes
- */
-export function rotateMotion(timestamp: number) {
-    if (viewer) {
-        if (!startRotation) {
-            startRotation = timestamp;
-        }
-        var progress = timestamp - startRotation;
-        startRotation = timestamp;
-        var rotateStep = 0.0005 * (progress || 0);
-        // get the up axis
-        // var worldUp = viewer.navigation.getWorldUpVector();
-        // get the current position
-        var pos = viewer.navigation.getPosition();
-        // copy that position
-        var position = new THREE.Vector3(pos.x, pos.y, pos.z);
-        // set the rotate axis
-        // var rAxis = new THREE.Vector3(worldUp.x, worldUp.y, worldUp.z);
-        // var matrix = new THREE.Matrix4().makeRotationAxis(rAxis, rotateStep);
-        //apply the new position
-        // position.applyMatrix4(matrix);
-        viewer.navigation.setPosition(position);
-        rotationReq = window.requestAnimationFrame(rotateMotion);
-    }
-}
-
-/**
- * Toggle the rotation movement
- * @param  boolean cancelMotion true if motion is to be cancelled
- */
-export function toggleRotation(cancelMotion: boolean) {
-    if (cancelMotion || isRotating) {
-        cancelAnimationFrame(rotationReq);
-        isRotating = false;
-    } else {
-        rotateMotion(0);
-        isRotating = true;
-    }
-}
-
-export function stopMotion() {
-    toggleRotation(true);
-}
-
-const Helpers = {
+const ViewerLaunchers = {
     launchViewer,
     loadDocument,
 };
 
-export default Helpers;
+export default ViewerLaunchers;

@@ -1,18 +1,7 @@
 import { SelectedPropertiesAction, SelectedPropertiesState } from "../type";
 import * as actionTypes from "./viewerTypes";
 
-const initialState: SelectedPropertiesState = {
-    // properties: {
-    //     dimensions: {
-    //         length: 10,
-    //         area: 100,
-    //     },
-    //     material: {
-    //         name: "Carpet",
-    //         cost: 5,
-    //     },
-    // },
-};
+const initialState: SelectedPropertiesState = {};
 
 const reducer = (
     state: SelectedPropertiesState = initialState,
@@ -29,5 +18,4 @@ const reducer = (
     return state;
 };
 
-// declare const reducer: Reducer<IModelProperties[]>;
 export default reducer;
