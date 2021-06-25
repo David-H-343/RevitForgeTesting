@@ -149,7 +149,7 @@ const ForgeViewer: React.FunctionComponent<IForgeViewerProps> = () => {
     return (
         <div className="forge-forgeviewer">
             <Viewer />
-            <div className="container safari-only">
+            <div className="container">
                 <button className="forge-btn" onClick={onFullscreen}>
                     <i className={buttonClass}></i>
                 </button>

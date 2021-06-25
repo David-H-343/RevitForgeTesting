@@ -16,17 +16,17 @@
 // UNINTERRUPTED OR ERROR FREE.
 /////////////////////////////////////////////////////////////////////////////////
 
-import React, { Component } from "react";
+import React from "react";
 import "antd/dist/antd.css";
-// import "bootstrap/dist/css/bootstrap.css";
 import "./App.css";
 import "font-awesome/css/font-awesome.css";
 import ForgeViewer from "./ForgeViewer/ForgeViewer";
-import Viewer from "./Viewer/Viewer";
 
 import { ISelectedProperties, SelectedPropertiesState } from "./type";
 import { useSelector } from "react-redux";
 import { Col, Row } from "antd";
+import Viewer from "./Viewer/Viewer";
+import Properties from "./Properties/Properties";
 
 interface IAppProps {}
 
@@ -36,7 +36,24 @@ const App: React.FunctionComponent<IAppProps> = () => {
     );
     return (
         <div>
-            <ForgeViewer />
+            <Row justify="center" className="header">
+                <Col span={24}></Col>
+            </Row>
+            <Row justify="center">
+                <Col span={12} offset={6}>
+                    <Row justify="center">
+                        <Col span={24} className="forgeviewer">
+                            <Viewer />
+                        </Col>
+                    </Row>
+                    <Row className="footer">
+                        <Col></Col>
+                    </Row>
+                </Col>
+                <Col span={6} className="properties">
+                    {/* <Properties onClose={() => {}} /> */}
+                </Col>
+            </Row>
         </div>
     );
 };

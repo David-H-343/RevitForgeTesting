@@ -46,68 +46,79 @@ const Properties: React.FunctionComponent<IPropertiesProps> = (props) => {
                 ) : (
                     <div>
                         <div>
-                            {selectedProperties.dimensions?.length && (
-                                <p>
-                                    Length:{" "}
-                                    {Math.round(
-                                        selectedProperties.dimensions.length
-                                    )}
-                                </p>
-                            )}
-                            {selectedProperties.dimensions?.width && (
-                                <p>
-                                    Width:{" "}
-                                    {Math.round(
-                                        selectedProperties.dimensions.width
-                                    )}
-                                </p>
-                            )}
-                            {selectedProperties.dimensions?.height && (
-                                <p>
-                                    Height:{" "}
-                                    {Math.round(
-                                        selectedProperties.dimensions.height
-                                    )}
-                                </p>
-                            )}
-                            {selectedProperties.dimensions?.perimeter && (
-                                <p>
-                                    Perimeter:{" "}
-                                    {Math.round(
-                                        selectedProperties.dimensions.perimeter
-                                    )}
-                                </p>
-                            )}
-                            {selectedProperties.dimensions?.area && (
-                                <p>
-                                    Area:{" "}
-                                    {selectedProperties.dimensions.area.toFixed(
-                                        3
-                                    )}
-                                </p>
-                            )}
-                            {selectedProperties.dimensions?.volume && (
-                                <p>
-                                    Volume:{" "}
-                                    {selectedProperties.dimensions.volume.toFixed(
-                                        3
-                                    )}
-                                </p>
-                            )}
-                            {selectedProperties.material?.name && (
-                                <p>
-                                    Material:{" "}
-                                    {selectedProperties.material?.name}
-                                </p>
-                            )}
-                            {selectedProperties.material?.cost && (
-                                <p>
-                                    Cost:{" "}
-                                    {Math.round(
-                                        selectedProperties.material?.cost || 0
-                                    )}
-                                </p>
-                            )}
+                            {Object.keys(selectedProperties.dimensions).length >
+                                0 && <h4>Dimensions</h4>}
+                            <ul>
+                                {selectedProperties.dimensions?.length && (
+                                    <li>
+                                        Length:{" "}
+                                        {Math.round(
+                                            selectedProperties.dimensions.length
+                                        )}
+                                    </li>
+                                )}
+                                {selectedProperties.dimensions?.width && (
+                                    <li>
+                                        Width:{" "}
+                                        {Math.round(
+                                            selectedProperties.dimensions.width
+                                        )}
+                                    </li>
+                                )}
+                                {selectedProperties.dimensions?.height && (
+                                    <li>
+                                        Height:{" "}
+                                        {Math.round(
+                                            selectedProperties.dimensions.height
+                                        )}
+                                    </li>
+                                )}
+                                {selectedProperties.dimensions?.perimeter && (
+                                    <li>
+                                        Perimeter:{" "}
+                                        {Math.round(
+                                            selectedProperties.dimensions
+                                                .perimeter
+                                        )}
+                                    </li>
+                                )}
+                                {selectedProperties.dimensions?.area && (
+                                    <li>
+                                        Area:{" "}
+                                        {selectedProperties.dimensions.area.toFixed(
+                                            3
+                                        )}
+                                    </li>
+                                )}
+                                {selectedProperties.dimensions?.volume && (
+                                    <li>
+                                        Volume:{" "}
+                                        {selectedProperties.dimensions.volume.toFixed(
+                                            3
+                                        )}
+                                    </li>
+                                )}
+                            </ul>
+
+                            {Object.keys(selectedProperties.material).length >
+                                0 && <h4>Material</h4>}
+                            <ul>
+                                {selectedProperties.material?.name && (
+                                    <li>
+                                        Material:{" "}
+                                        {selectedProperties.material?.name}
+                                    </li>
+                                )}
+                                {selectedProperties.material?.cost && (
+                                    <li>
+                                        Cost:{" "}
+                                        {Math.round(
+                                            selectedProperties.material?.cost ||
+                                                0
+                                        )}
+                                    </li>
+                                )}
+                            </ul>
                         </div>
                     </div>
                 )}
